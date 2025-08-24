@@ -1,0 +1,11 @@
+# Personal workspace configurations
+*.yml
+!workspace.example.yml
+
+# Build artifacts
+wspcs
+*.exe
+dist/
+
+# Go build cache
+.cache/

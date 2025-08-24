@@ -1,0 +1,12 @@
+name: "fullstack-dev"
+projects:
+  - name: "frontend"
+    path: "/home/user/projects/my-app/frontend"
+  - name: "backend"
+    path: "/home/user/projects/my-app/backend"
+  - name: "api-gateway"
+    path: "/home/user/projects/my-app/gateway"
+  - name: "database"
+    path: "/home/user/projects/my-app/migrations"
+  - name: "docs"
+    path: "/home/user/projects/my-app/documentation"
