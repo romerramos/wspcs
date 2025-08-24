@@ -6,7 +6,7 @@ set -e
 
 BINARY_NAME="wspcs"
 INSTALL_DIR="/usr/local/bin"
-GITHUB_REPO="romerramos/wspcs" # Update this to your actual GitHub repo
+GITHUB_REPO="romerramos/wspcs"
 VERSION="latest"
 
 # Colors for output
@@ -79,10 +79,18 @@ install_binary() {
     binary_name="${binary_name}.exe"
   fi
 
-  local download_url="https://github.com/${GITHUB_REPO}/releases/latest/download/${binary_name}"
+  # Get the latest release version using GitHub API (first release in the list)
+  local latest_version=$(curl -sSL "https://api.github.com/repos/${GITHUB_REPO}/releases" | grep '"tag_name":' | head -1 | sed 's/.*"tag_name": *"\([^"]*\)".*/\1/')
+
+  if [[ -z "$latest_version" ]]; then
+    error "Failed to get latest release version"
+  fi
+
+  local download_url="https://github.com/${GITHUB_REPO}/releases/download/${latest_version}/${binary_name}"
   local temp_file="/tmp/${binary_name}"
 
   log "Detected platform: ${platform}"
+  log "Latest version: ${latest_version}"
   log "Downloading from: ${download_url}"
 
   # Download binary
@@ -124,4 +132,3 @@ main() {
 
 # Run main function
 main "$@"
-
