@@ -50,6 +50,13 @@ func main() {
 		log.Fatal("Failed to create session:", err)
 	}
 
+	// Run command in first window if specified
+	if w.Command != "" {
+		if err := session.SendKeys("", 1, w.Command); err != nil {
+			log.Printf("Failed to run workspace command: %v", err)
+		}
+	}
+
 	for _, project := range w.Projects {
 		if _, err := os.Stat(project.Path); err != nil {
 			log.Printf("Failed to find path %s: %v", project.Path, err)
@@ -62,7 +69,13 @@ func main() {
 		if err := session.SplitWindowVertical(project.Name, 1, 25, project.Path); err != nil {
 			log.Printf("Failed to split window for project %s: %v", project.Name, err)
 		}
-		if err := session.SendKeys(project.Name, 2, "clear"); err != nil {
+
+		command := "clear"
+		if project.Command != "" {
+			command = project.Command
+		}
+
+		if err := session.SendKeys(project.Name, 2, command); err != nil {
 			log.Printf("Failed to clear terminal on project %s: %v", project.Name, err)
 		}
 		if err := session.SendKeys(project.Name, 1, "nvim ."); err != nil {

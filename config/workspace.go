@@ -11,9 +11,11 @@ import (
 
 type Workspace struct {
 	Name     string `yaml:"name"`
+	Command  string `yaml:"command,omitempty"`
 	Projects []struct {
-		Name string `yaml:"name"`
-		Path string `yaml:"path"`
+		Name    string `yaml:"name"`
+		Path    string `yaml:"path"`
+		Command string `yaml:"command,omitempty"`
 	}
 }
 

@@ -87,33 +87,40 @@ Create a YAML file with your workspace configuration:
 
 ```yaml
 name: "my-workspace"
+command: "clear && echo 'Welcome to workspace!' && htop"  # Optional
 projects:
   - name: "frontend"
     path: "/path/to/frontend"
+    command: "npm run dev"  # Optional
   - name: "backend"
     path: "/path/to/backend"
+    command: "go run main.go"  # Optional
   - name: "docs"
     path: "/path/to/documentation"
+    # command defaults to "clear" if not specified
 ```
 
 ### Configuration Format
 
 - `name`: The name of the tmux session
+- `command`: (Optional) Command to run in the first window of the session (workspace window)
 - `projects`: Array of projects to include
   - `name`: Display name for the tmux window
   - `path`: Absolute path to the project directory
+  - `command`: (Optional) Command to run in the terminal pane (defaults to "clear")
 
 ## How it Works
 
 1. **Session Check**: Checks if a tmux session with the given name already exists
 2. **Attach or Create**: If exists, attaches to it. Otherwise, creates a new session
-3. **Project Windows**: For each project:
+3. **Workspace Command**: If specified, runs the workspace command in the first window
+4. **Project Windows**: For each project:
    - Creates a new tmux window
    - Sets working directory to project path
    - Splits window vertically (75% nvim, 25% terminal)
    - Opens nvim in the main pane
-   - Clears the terminal pane
-4. **Attach**: Finally attaches to the session
+   - Runs the project command in the terminal pane (or "clear" if not specified)
+5. **Attach**: Finally attaches to the session
 
 ## Window Layout
 
