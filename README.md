@@ -1,3 +1,7 @@
+---
+This repository is not maintained anymore. I didn’t know about tmuxinator, so there’s no need to re-create the same app.
+---
+
 # Workspace Manager
 
 A tmux workspace manager that creates development environments based on YAML configuration files.
